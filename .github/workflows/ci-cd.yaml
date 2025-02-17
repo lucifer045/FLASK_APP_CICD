@@ -45,6 +45,12 @@ jobs:
           uses: actions/checkout@v4
         - name: Install Ansible
           run: sudo pip3 install ansible
+        - name: Install eksctl
+          run: |
+             curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_$PLATFORM.tar.gz"
+             curl -sL "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_checksums.txt" | grep $PLATFORM | sha256sum --check
+             tar -xzf eksctl_$PLATFORM.tar.gz -C /tmp && rm eksctl_$PLATFORM.tar.gz
+             sudo mv /tmp/eksctl /usr/local/bin
         - name: Configure AWS Credentials
           uses: aws-actions/configure-aws-credentials@v4 
           with: 
