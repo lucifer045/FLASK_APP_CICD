@@ -56,7 +56,7 @@ jobs:
           with:
             playbook: ansible/playbooks/deploy.yaml 
           env: 
-            docker_usrname: ${{env.DOCKER_USERNAME}}
+            docker_username: ${{env.DOCKER_USERNAME}}
         - name: Verify Deployment 
           run: |
              kubectl port-forward svc/flask-service 8080:80 > /dev/null 2>&1 & PF_PID=$! sleep 5
