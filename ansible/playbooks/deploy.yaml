@@ -5,7 +5,7 @@
   gather_facts: no
   vars: 
      DEPLOYMENT_NAME: "flask-deployment"
-     LATEST_IMAGE: "{{dockerhub_username}}/app_deployment:latest"
+     LATEST_IMAGE: "{{docker_username}}/app_deployment:latest"
   tasks:
       - name: Get current version 
         command: "kubectl rollout history deployment/{{DEPLOYMENT_NAME}}"
