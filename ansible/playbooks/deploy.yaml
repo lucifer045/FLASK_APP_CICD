@@ -9,12 +9,14 @@
   tasks:
       - name: Get current version 
         command: "kubectl rollout history deployment/{{DEPLOYMENT_NAME}}"
-        register: rollout_history 
+        register: rollout_history
+        ignore_errors: true
         changed_when: false
       - name: Extract previous version number
         set_fact:
             PREVIOUS_REVISION: "{{ (rollout_history.stdout_lines[-2].split()[0] | int) - 1}}" 
-        when: rollout_history.stdout_lines | length > 1   
+        when: rollout_history.stdout_lines | length > 1
+        ignore_errors: true
       - block:
           - name: Update deployment image
             command: "kubectl set image deployment/{{DEPLOYMENT_NAME}} flask-app={{LATEST_IMAGE}}"
