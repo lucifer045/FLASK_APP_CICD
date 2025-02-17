@@ -73,7 +73,7 @@ jobs:
           if: steps.check_cluster.outputs.cluster_exists == 'false'
           run: eksctl create cluster -f cluster.yaml
         - name: Deploy using Ansible 
-          run: ansible-playbook -i "localhost," ansible/playbooks/deploy.yaml
+          run: ansible-playbook -i ansible/inventory/host.yaml ansible/playbooks/deploy.yaml -vvv
           env: 
             docker_username: ${{env.DOCKER_USERNAME}}
         - name: Verify Deployment 
