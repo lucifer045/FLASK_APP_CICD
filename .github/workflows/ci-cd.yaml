@@ -5,7 +5,7 @@ on:
      branches: [main]
 
 env:
-   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+   DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
    IMAGE_NAME: "app_deployment"
    K8S_NAMESPACE: "default"
 
