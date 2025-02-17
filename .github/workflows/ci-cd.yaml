@@ -43,6 +43,8 @@ jobs:
      steps:
         - name: Checkout code
           uses: actions/checkout@v4
+        - name: Install Ansible
+          run: sudo pip3 install ansible
         - name: Configure AWS Credentials
           uses: aws-actions/configure-aws-credentials@v4 
           with: 
@@ -52,9 +54,7 @@ jobs:
         - name: Create EKS Cluster
           run: eksctl create cluster -f cluster.yaml
         - name: Deploy using Ansible 
-          uses: ansible/ansible-action@v2 
-          with:
-            playbook: ansible/playbooks/deploy.yaml 
+          run: ansible-playbook ansible/playbooks/deploy.yaml
           env: 
             docker_username: ${{env.DOCKER_USERNAME}}
         - name: Verify Deployment 
