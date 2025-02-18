@@ -29,7 +29,7 @@
         rescue:
           - name: Rollback to previous version
             command: "kubectl rollout undo deployment/flask-deployment revision=Previous_version" 
-            when: Previous_version" is defined
+            when: Previous_version is defined
           - name: Fail if rollback unsuccessful
             fail:
                msg: "Deployment failed and rollback was also unsuccessful"        
