@@ -85,9 +85,7 @@ jobs:
           run: | 
               aws eks update-kubeconfig --name flask-cluster --region us-east-1
         - name: Deploy using Ansible 
-          run: ansible-playbook -i ansible/inventory/host.yaml ansible/playbooks/deploy.yaml -vv
-          env: 
-            docker_username: ${{env.DOCKER_USERNAME}}
+          run: ansible-playbook -i ansible/inventory/host.yaml ansible/playbooks/deploy.yaml --extra-vars "docker_username=${{ env.DOCKER_USERNAME }}" -vv
         - name: Verify Deployment 
           run: |
              kubectl port-forward svc/flask-service 8080:80 > /dev/null 2>&1 & PF_PID=$! sleep 5
