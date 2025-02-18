@@ -40,6 +40,9 @@ jobs:
      needs: ci 
      runs-on: ubuntu-latest
      environment: production
+     permissions:
+        id-token: write
+        contents: read
      steps:
         - name: Checkout code
           uses: actions/checkout@v4
