@@ -86,7 +86,7 @@ jobs:
               aws eks update-kubeconfig --name flask-cluster --region us-east-1
         - name: Create Deployment and Service
           run: |
-             kubectl apply -f kubernetes/deploy.yaml
+             kubectl apply -f kubernetes/deployment.yaml
              kubectl apply -f kubernetes/service.yaml
           
         # - name: Deploy using Ansible 
