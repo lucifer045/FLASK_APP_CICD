@@ -7,6 +7,10 @@
      DEPLOYMENT_NAME: "flask-deployment"
      LATEST_IMAGE: "{{docker_username}}/app_deployment:latest"
   tasks:
+      - name: Create deployment
+        command: "kubectl apply -f kubernetes/deploy.yaml"
+      - name: Create service
+        command: "kubectl apply -f kubernetes/service.yaml"
       - name: Get current version 
         command: "kubectl rollout history deployment/{{DEPLOYMENT_NAME}}"
         register: rollout_history
