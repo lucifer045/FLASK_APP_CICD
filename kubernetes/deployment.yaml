@@ -18,7 +18,7 @@ spec:
         app: flask-deployment
     spec:
       containers:
-        - image: raghav045/app_deployment:v1
+        - image: raghav045/app_deployment:v2
           name: flask-app
           ports:
            - containerPort: 9001
