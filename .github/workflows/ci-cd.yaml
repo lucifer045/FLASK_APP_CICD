@@ -93,6 +93,6 @@ jobs:
         #   run: ansible-playbook -i ansible/inventory/host.yaml ansible/playbooks/deploy.yaml --extra-vars "docker_username=${{ env.DOCKER_USERNAME }}" -vv
         - name: Verify Deployment 
           run: |
-             kubectl port-forward svc/flask-service 8080:80 > /dev/null 2>&1 & PF_PID=$! sleep 5
-             curl --retry 5 --retry-delay 5 --fail http://localhost:8080/health
-             kill $PF_PID                                  
+             #kubectl port-forward svc/flask-service 8080:80 > /dev/null 2>&1 & PF_PID=$! sleep 5
+             curl --retry 5 --retry-delay 5 --fail http://localhost:30359/health
+             #kill $PF_PID                                  
