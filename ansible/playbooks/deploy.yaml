@@ -5,7 +5,7 @@
   gather_facts: no
   vars: 
      DEPLOYMENT_NAME: "flask-deployment"
-     LATEST_IMAGE: "{{docker_username}}/app_deployment:latest"
+     LATEST_IMAGE: "{{docker_username}}/{{image}}:{{version}}"
   tasks:
       - name: Get current version 
         command: "kubectl rollout history deployment/{{DEPLOYMENT_NAME}}"
@@ -21,14 +21,14 @@
           - name: Update deployment image
             command: "kubectl set image deployment/{{DEPLOYMENT_NAME}} flask-app={{LATEST_IMAGE}}"
           - name: Wait for rollout to succeed
-            command: kubectl rollout status deployment/flask-deployment
+            command: kubectl rollout status deployment/{{DEPLOYMENT_NAME}}
             register: rollout_status
             until: rollout_status.rc == 0
             retries: 10
             delay: 10 
         rescue:
           - name: Rollback to previous version
-            command: "kubectl rollout undo deployment/flask-deployment revision=Previous_version" 
+            command: "kubectl rollout undo deployment/{{DEPLOYMENT_NAME}} revision=Previous_version" 
             when: Previous_version is defined
           - name: Fail if rollback unsuccessful
             fail:
