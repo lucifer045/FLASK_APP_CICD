@@ -3,11 +3,13 @@ name: CICD Pipeline
 on: 
   push:
      branches: [main]
+     paths:
+       - main.py
 
-env:
-   DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-   IMAGE_NAME: "app_deployment"
-   K8S_NAMESPACE: "default"
+# env:
+#    DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+#    IMAGE_NAME: "app_deployment"
+#    K8S_NAMESPACE: "default"
 
 jobs:
    ci:
