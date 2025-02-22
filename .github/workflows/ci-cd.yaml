@@ -6,10 +6,11 @@ on:
      paths:
        - main.py
 
-# env:
-#    DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-#    IMAGE_NAME: "app_deployment"
-#    K8S_NAMESPACE: "default"
+env:
+    DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+    IMAGE_NAME: "app_deployment"
+    K8S_NAMESPACE: "default"
+    Version: "v3"
 
 jobs:
    ci:
@@ -21,10 +22,10 @@ jobs:
           uses: docker/build-push-action@v5
           with: 
              context: .
-             tags: ${{env.DOCKER_USERNAME}}/${{env.IMAGE_NAME}}:v3
+             tags: ${{env.DOCKER_USERNAME}}/${{env.IMAGE_NAME}}:${{env.Version}}
         - name: Test Docker Container 
           run: |
-             CONTAINER_ID=$(docker run -d --rm -p 9001:9001 ${{env.DOCKER_USERNAME}}/${{env.IMAGE_NAME}}:v3)
+             CONTAINER_ID=$(docker run -d --rm -p 9001:9001 ${{env.DOCKER_USERNAME}}/${{env.IMAGE_NAME}}:${{env.Version}})
              trap "docker stop $CONTAINER_ID || true" EXIT 
              sleep 10
              curl --retry 5 --retry-delay 5 --fail http://localhost:9001/health 
@@ -37,7 +38,7 @@ jobs:
           uses: docker/build-push-action@v5 
           with:
              push: true
-             tags: ${{env.DOCKER_USERNAME}}/${{env.IMAGE_NAME}}:v3
+             tags: ${{env.DOCKER_USERNAME}}/${{env.IMAGE_NAME}}:${{env.Version}}
    cd: 
      needs: ci 
      runs-on: ubuntu-latest
