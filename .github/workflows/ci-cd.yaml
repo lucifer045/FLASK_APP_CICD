@@ -92,8 +92,8 @@ jobs:
              kubectl apply -f kubernetes/deployment.yaml
              kubectl apply -f kubernetes/service.yaml
           
-        # - name: Deploy using Ansible 
-        #   run: ansible-playbook -i ansible/inventory/host.yaml ansible/playbooks/deploy.yaml --extra-vars "docker_username=${{ env.DOCKER_USERNAME }}" -vv
+        - name: Deploy using Ansible 
+          run: ansible-playbook -i ansible/inventory/host.yaml ansible/playbooks/deploy.yaml -e "docker_username=${{env.DOCKER_USERNAME}}" -e "image"=${{env.IMAGE_NAME}} -e "version=${{env.Version}}" -vv
         - name: Verify Deployment 
           run: |
              kubectl port-forward svc/flask-service 8080:80 > /dev/null 2>&1 & PID=$! & sleep 5
